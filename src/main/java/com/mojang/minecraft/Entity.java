@@ -17,19 +17,10 @@ public abstract class Entity implements Serializable {
 
    public static final long serialVersionUID = 0L;
    public Level level;
-   public float xo;
-   public float yo;
-   public float zo;
-   public float x;
-   public float y;
-   public float z;
-   public float xd;
-   public float yd;
-   public float zd;
-   public float yRot;
-   public float xRot;
-   public float yRotO;
-   public float xRotO;
+   public float xo, yo, zo;
+   public float x, y, z, xd, yd, zd;
+   public float yRot, xRot;
+   public float xRotO, yRotO;
    public AABB bb;
    public boolean onGround = false;
    public boolean horizontalCollision = false;
@@ -157,12 +148,12 @@ public abstract class Entity implements Serializable {
 
    public boolean isFree(float var1, float var2, float var3, float var4) {
       AABB var5 = this.bb.grow(var4, var4, var4).cloneMove(var1, var2, var3);
-      return this.level.getCubes(var5).size() > 0?false:!this.level.containsAnyLiquid(var5);
+      return this.level.getCubes(var5).size() <= 0 && !this.level.containsAnyLiquid(var5);
    }
 
    public boolean isFree(float var1, float var2, float var3) {
       AABB var4 = this.bb.cloneMove(var1, var2, var3);
-      return this.level.getCubes(var4).size() > 0?false:!this.level.containsAnyLiquid(var4);
+      return this.level.getCubes(var4).size() <= 0 && !this.level.containsAnyLiquid(var4);
    }
 
    public void move(float var1, float var2, float var3) {
@@ -180,8 +171,8 @@ public abstract class Entity implements Serializable {
          AABB var9 = this.bb.copy();
          ArrayList var10 = this.level.getCubes(this.bb.expand(var1, var2, var3));
 
-         for(int var11 = 0; var11 < var10.size(); ++var11) {
-            var2 = ((AABB)var10.get(var11)).clipYCollide(this.bb, var2);
+         for (Object o : var10) {
+            var2 = ((AABB) o).clipYCollide(this.bb, var2);
          }
 
          this.bb.move(0.0F, var2, 0.0F);
@@ -326,7 +317,7 @@ public abstract class Entity implements Serializable {
 
    public boolean isUnderWater() {
       int var1;
-      return (var1 = this.level.getTile((int)this.x, (int)(this.y + 0.12F), (int)this.z)) != 0?Block.blocks[var1].getLiquidType().equals(LiquidType.WATER):false;
+      return (var1 = this.level.getTile((int) this.x, (int) (this.y + 0.12F), (int) this.z)) != 0 && Block.blocks[var1].getLiquidType().equals(LiquidType.WATER);
    }
 
    public boolean isInLava() {
@@ -426,10 +417,10 @@ public abstract class Entity implements Serializable {
 
    }
 
-   protected void push(float var1, float var2, float var3) {
-      this.xd += var1;
-      this.yd += var2;
-      this.zd += var3;
+   protected void push(float xd, float yd, float zd) {
+      this.xd += xd;
+      this.yd += yd;
+      this.zd += zd;
    }
 
    public void hurt(Entity var1, int var2) {}

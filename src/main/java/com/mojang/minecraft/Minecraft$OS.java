@@ -13,4 +13,13 @@ public enum Minecraft$OS
 	private Minecraft$OS(String name, int id)
 	{
 	}
+
+	public static int GetOperatingSystemAsInt(String osName) {
+		return OperatingSystemLookup.lookup[(osName.contains("win")?Minecraft$OS.windows:
+				(osName.contains("mac")?Minecraft$OS.macos:
+						(osName.contains("solaris")?Minecraft$OS.solaris:
+								(osName.contains("sunos")?Minecraft$OS.solaris:
+										(osName.contains("linux")?Minecraft$OS.linux:
+												(osName.contains("unix")?Minecraft$OS.linux:Minecraft$OS.unknown)))))).ordinal()];
+	}
 }
