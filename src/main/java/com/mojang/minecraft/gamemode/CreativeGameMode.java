@@ -1,6 +1,6 @@
 package com.mojang.minecraft.gamemode;
 
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import com.mojang.minecraft.SessionData;
 import com.mojang.minecraft.gui.BlockSelectScreen;
 import com.mojang.minecraft.level.Level;
@@ -9,9 +9,9 @@ import com.mojang.minecraft.player.Player;
 
 public class CreativeGameMode extends GameMode
 {
-	public CreativeGameMode(Minecraft minecraft)
+	public CreativeGameMode(Game game)
 	{
-		super(minecraft);
+		super(game);
 
 		instantBreak = true;
 	}
@@ -32,7 +32,7 @@ public class CreativeGameMode extends GameMode
 	{
 		BlockSelectScreen blockSelectScreen = new BlockSelectScreen();
 
-		minecraft.setCurrentScreen(blockSelectScreen);
+		game.setCurrentScreen(blockSelectScreen);
 	}
 
 	@Override

@@ -9,12 +9,12 @@ public final class PauseScreen extends GuiScreen {
       this.buttons.add(new Button(2, this.width / 2 - 100, this.height / 4 + 48, "Save level.."));
       this.buttons.add(new Button(3, this.width / 2 - 100, this.height / 4 + 72, "Load level.."));
       this.buttons.add(new Button(4, this.width / 2 - 100, this.height / 4 + 120, "Back to game"));
-      if(this.minecraft.session == null) {
+      if(this.game.session == null) {
          ((Button)this.buttons.get(2)).active = false;
          ((Button)this.buttons.get(3)).active = false;
       }
 
-      if(this.minecraft.networkManager != null) {
+      if(this.game.networkManager != null) {
          ((Button)this.buttons.get(1)).active = false;
          ((Button)this.buttons.get(2)).active = false;
          ((Button)this.buttons.get(3)).active = false;
@@ -24,26 +24,26 @@ public final class PauseScreen extends GuiScreen {
 
    protected final void onButtonClick(Button var1) {
       if(var1.id == 0) {
-         this.minecraft.setCurrentScreen(new OptionsScreen(this, this.minecraft.settings));
+         this.game.setCurrentScreen(new OptionsScreen(this, this.game.settings));
       }
 
       if(var1.id == 1) {
-         this.minecraft.setCurrentScreen(new GenerateLevelScreen(this));
+         this.game.setCurrentScreen(new GenerateLevelScreen(this));
       }
 
-      if(this.minecraft.session != null) {
+      if(this.game.session != null) {
          if(var1.id == 2) {
-            this.minecraft.setCurrentScreen(new SaveLevelScreen(this));
+            this.game.setCurrentScreen(new SaveLevelScreen(this));
          }
 
          if(var1.id == 3) {
-            this.minecraft.setCurrentScreen(new LoadLevelScreen(this));
+            this.game.setCurrentScreen(new LoadLevelScreen(this));
          }
       }
 
       if(var1.id == 4) {
-         this.minecraft.setCurrentScreen((GuiScreen)null);
-         this.minecraft.grabMouse();
+         this.game.setCurrentScreen((GuiScreen)null);
+         this.game.grabMouse();
       }
 
    }

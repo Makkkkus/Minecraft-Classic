@@ -1,11 +1,8 @@
 package com.mojang.minecraft.gui;
 
 import com.mojang.minecraft.ChatLine;
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import com.mojang.minecraft.gamemode.SurvivalGameMode;
-import com.mojang.minecraft.gui.ChatInputScreen;
-import com.mojang.minecraft.gui.FontRenderer;
-import com.mojang.minecraft.gui.Screen;
 import com.mojang.minecraft.level.tile.Block;
 import com.mojang.minecraft.player.Inventory;
 import com.mojang.minecraft.render.ShapeRenderer;
@@ -21,14 +18,14 @@ public final class HUDScreen extends Screen {
 
    public List chat = new ArrayList();
    private Random random = new Random();
-   private Minecraft mc;
+   private Game mc;
    private int width;
    private int height;
    public String hoveredPlayer = null;
    public int ticks = 0;
 
 
-   public HUDScreen(Minecraft var1, int var2, int var3) {
+   public HUDScreen(Game var1, int var2, int var3) {
       this.mc = var1;
       this.width = var2 * 240 / var3;
       this.height = var3 * 240 / var3;

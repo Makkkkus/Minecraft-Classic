@@ -1,13 +1,12 @@
 package com.mojang.minecraft.render;
 
 import com.mojang.minecraft.Entity;
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.liquid.LiquidType;
 import com.mojang.minecraft.level.tile.Block;
 import com.mojang.minecraft.model.Vec3D;
 import com.mojang.minecraft.player.Player;
-import com.mojang.minecraft.render.HeldBlock;
 import com.mojang.util.MathHelper;
 import java.nio.FloatBuffer;
 import java.util.Random;
@@ -16,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 
 public final class Renderer {
 
-   public Minecraft minecraft;
+   public Game game;
    public float fogColorMultiplier = 1.0F;
    public boolean displayActive = false;
    public float fogEnd = 0.0F;
@@ -32,14 +31,14 @@ public final class Renderer {
    public float fogGreen;
 
 
-   public Renderer(Minecraft var1) {
-      this.minecraft = var1;
+   public Renderer(Game var1) {
+      this.game = var1;
       this.heldBlock = new HeldBlock(var1);
    }
 
    public Vec3D getPlayerVector(float var1) {
       Player var4;
-      float var2 = (var4 = this.minecraft.player).xo + (var4.x - var4.xo) * var1;
+      float var2 = (var4 = this.game.player).xo + (var4.x - var4.xo) * var1;
       float var3 = var4.yo + (var4.y - var4.yo) * var1;
       float var5 = var4.zo + (var4.z - var4.zo) * var1;
       return new Vec3D(var2, var3, var5);
@@ -47,7 +46,7 @@ public final class Renderer {
 
    public void hurtEffect(float var1) {
       Player var3;
-      float var2 = (float)(var3 = this.minecraft.player).hurtTime - var1;
+      float var2 = (float)(var3 = this.game.player).hurtTime - var1;
       if(var3.health <= 0) {
          var1 += (float)var3.deathTime;
          GL11.glRotatef(40.0F - 8000.0F / (var1 + 200.0F), 0.0F, 0.0F, 1.0F);
@@ -64,7 +63,7 @@ public final class Renderer {
 
    public void applyBobbing(float var1) {
       Player var4;
-      float var2 = (var4 = this.minecraft.player).walkDist - var4.walkDistO;
+      float var2 = (var4 = this.game.player).walkDist - var4.walkDistO;
       var2 = var4.walkDist + var2 * var1;
       float var3 = var4.oBob + (var4.bob - var4.oBob) * var1;
       float var5 = var4.oTilt + (var4.tilt - var4.oTilt) * var1;
@@ -94,8 +93,8 @@ public final class Renderer {
    }
 
    public final void enableGuiMode() {
-      int var1 = this.minecraft.width * 240 / this.minecraft.height;
-      int var2 = this.minecraft.height * 240 / this.minecraft.height;
+      int var1 = this.game.width * 240 / this.game.height;
+      int var2 = this.game.height * 240 / this.game.height;
       GL11.glClear(256);
       GL11.glMatrixMode(5889);
       GL11.glLoadIdentity();
@@ -106,8 +105,8 @@ public final class Renderer {
    }
 
    public void updateFog() {
-      Level var1 = this.minecraft.level;
-      Player var2 = this.minecraft.player;
+      Level var1 = this.game.level;
+      Player var2 = this.game.player;
       GL11.glFog(2918, this.createBuffer(this.fogRed, this.fogBlue, this.fogGreen, 1.0F));
       GL11.glNormal3f(0.0F, -1.0F, 0.0F);
       GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -124,7 +123,7 @@ public final class Renderer {
             var7 = 0.4F;
             var8 = 0.4F;
             var3 = 0.9F;
-            if(this.minecraft.settings.anaglyph) {
+            if(this.game.settings.anaglyph) {
                var4 = (var7 * 30.0F + var8 * 59.0F + var3 * 11.0F) / 100.0F;
                var8 = (var7 * 30.0F + var8 * 70.0F) / 100.0F;
                var3 = (var7 * 30.0F + var3 * 70.0F) / 100.0F;
@@ -139,7 +138,7 @@ public final class Renderer {
             var7 = 0.4F;
             var8 = 0.3F;
             var3 = 0.3F;
-            if(this.minecraft.settings.anaglyph) {
+            if(this.game.settings.anaglyph) {
                var4 = (var7 * 30.0F + var8 * 59.0F + var3 * 11.0F) / 100.0F;
                var8 = (var7 * 30.0F + var8 * 70.0F) / 100.0F;
                var3 = (var7 * 30.0F + var3 * 70.0F) / 100.0F;

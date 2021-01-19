@@ -1,6 +1,6 @@
 package com.mojang.minecraft.gui;
 
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import org.lwjgl.input.Keyboard;
 
 public final class LevelNameScreen extends GuiScreen {
@@ -41,18 +41,18 @@ public final class LevelNameScreen extends GuiScreen {
    protected final void onButtonClick(Button var1) {
       if(var1.active) {
          if(var1.id == 0 && this.name.trim().length() > 1) {
-            Minecraft var10000 = this.minecraft;
+            Game var10000 = this.game;
             int var10001 = this.id;
             String var2 = this.name.trim();
             int var3 = var10001;
-            Minecraft var4 = var10000;
+            Game var4 = var10000;
             var10000.levelIo.saveOnline(var4.level, var4.host, var4.session.username, var4.session.sessionId, var2, var3);
-            this.minecraft.setCurrentScreen((GuiScreen)null);
-            this.minecraft.grabMouse();
+            this.game.setCurrentScreen((GuiScreen)null);
+            this.game.grabMouse();
          }
 
          if(var1.id == 1) {
-            this.minecraft.setCurrentScreen(this.parent);
+            this.game.setCurrentScreen(this.parent);
          }
 
       }

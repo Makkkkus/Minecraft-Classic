@@ -1,6 +1,6 @@
 package com.mojang.minecraft.gamemode;
 
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.tile.Block;
 import com.mojang.minecraft.level.tile.Tile$SoundType;
@@ -8,14 +8,14 @@ import com.mojang.minecraft.player.Player;
 
 public class GameMode
 {
-	public GameMode(Minecraft minecraft)
+	public GameMode(Game game)
 	{
-		this.minecraft = minecraft;
+		this.game = game;
 
 		instantBreak = false;
 	}
 
-	public Minecraft minecraft;
+	public Game game;
 
 	public boolean instantBreak;
 
@@ -41,16 +41,16 @@ public class GameMode
 
 	public void breakBlock(int x, int y, int z)
 	{
-		Level level = minecraft.level;
+		Level level = game.level;
 		Block block = Block.blocks[level.getTile(x, y, z)];
 
 		boolean success = level.netSetTile(x, y, z, 0);
 
 		if(block != null && success)
 		{
-			if(minecraft.isOnline())
+			if(game.isOnline())
 			{
-				minecraft.networkManager.sendBlockChange(x, y, z, 0, minecraft.player.inventory.getSelected());
+				game.networkManager.sendBlockChange(x, y, z, 0, game.player.inventory.getSelected());
 			}
 
 			if(block.stepsound != Tile$SoundType.none)
@@ -58,7 +58,7 @@ public class GameMode
 				level.playSound("step." + block.stepsound.name, (float)x, (float)y, (float)z, (block.stepsound.getVolume() + 1.0F) / 2.0F, block.stepsound.getPitch() * 0.8F);
 			}
 
-			block.spawnBreakParticles(level, x, y, z, minecraft.particleManager);
+			block.spawnBreakParticles(level, x, y, z, game.particleManager);
 		}
 
 	}

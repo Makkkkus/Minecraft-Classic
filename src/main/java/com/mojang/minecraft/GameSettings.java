@@ -14,13 +14,13 @@ import org.lwjgl.input.Keyboard;
 
 public final class GameSettings
 {
-	public GameSettings(Minecraft minecraft, File minecraftFolder)
+	public GameSettings(Game game, File minecraftFolder)
 	{
 		bindings = new KeyBinding[] {forwardKey, leftKey, backKey, rightKey, jumpKey, buildKey, chatKey, toggleFogKey, saveLocationKey, loadLocationKey};
 
 		settingCount = 8;
 
-		this.minecraft = minecraft;
+		this.game = game;
 
 		settingsFile = new File(minecraftFolder, "options.txt");
 
@@ -47,7 +47,7 @@ public final class GameSettings
 	public KeyBinding saveLocationKey = new KeyBinding("Save location", 28);
 	public KeyBinding loadLocationKey = new KeyBinding("Load location", 19);
 	public KeyBinding[] bindings;
-	private Minecraft minecraft;
+	private Game game;
 	private File settingsFile;
 	public int settingCount;
 
@@ -99,8 +99,8 @@ public final class GameSettings
 		{
 			anaglyph = !anaglyph;
 
-			TextureManager textureManager = minecraft.textureManager;
-			Iterator iterator = this.minecraft.textureManager.textureImages.keySet().iterator();
+			TextureManager textureManager = game.textureManager;
+			Iterator iterator = this.game.textureManager.textureImages.keySet().iterator();
 
 			int i;
 			BufferedImage image;

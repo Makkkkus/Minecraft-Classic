@@ -1,12 +1,9 @@
 package com.mojang.minecraft.render;
 
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.player.Player;
-import com.mojang.minecraft.render.Chunk;
-import com.mojang.minecraft.render.ChunkDistanceComparator;
-import com.mojang.minecraft.render.ShapeRenderer;
-import com.mojang.minecraft.render.TextureManager;
+
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +24,7 @@ public final class LevelRenderer {
    private int yChunks;
    private int zChunks;
    private int baseListId;
-   public Minecraft minecraft;
+   public Game game;
    private int[] chunkDataCache = new int['\uc350'];
    public int ticks = 0;
    private float lastLoadX = -9999.0F;
@@ -36,8 +33,8 @@ public final class LevelRenderer {
    public float cracks;
 
 
-   public LevelRenderer(Minecraft var1, TextureManager var2) {
-      this.minecraft = var1;
+   public LevelRenderer(Game var1, TextureManager var2) {
+      this.game = var1;
       this.textureManager = var2;
       this.listId = GL11.glGenLists(2);
       this.baseListId = GL11.glGenLists(4096 << 6 << 1);

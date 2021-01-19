@@ -1,6 +1,5 @@
 package com.mojang.minecraft.gui;
 
-import com.mojang.minecraft.gui.LoadLevelScreen;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -30,10 +29,10 @@ final class LevelDialog extends Thread {
          int var7;
          if(this.screen.saving) {
             var2 = this.screen;
-            var7 = this.screen.chooser.showSaveDialog(this.screen.minecraft.canvas);
+            var7 = this.screen.chooser.showSaveDialog(this.screen.game.canvas);
          } else {
             var2 = this.screen;
-            var7 = this.screen.chooser.showOpenDialog(this.screen.minecraft.canvas);
+            var7 = this.screen.chooser.showOpenDialog(this.screen.game.canvas);
          }
 
          if(var7 == 0) {

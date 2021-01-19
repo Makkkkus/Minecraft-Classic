@@ -1,10 +1,8 @@
 package com.mojang.minecraft.net;
 
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import com.mojang.minecraft.gui.FontRenderer;
 import com.mojang.minecraft.mob.HumanoidMob;
-import com.mojang.minecraft.net.PositionUpdate;
-import com.mojang.minecraft.net.SkinDownloadThread;
 import com.mojang.minecraft.render.TextureManager;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
@@ -15,7 +13,7 @@ public class NetworkPlayer extends HumanoidMob {
 
    public static final long serialVersionUID = 77479605454997290L;
    private List moveQueue = new LinkedList();
-   private Minecraft minecraft;
+   private final Game game;
    private int xp;
    private int yp;
    private int zp;
@@ -27,9 +25,9 @@ public class NetworkPlayer extends HumanoidMob {
    private TextureManager textures;
 
 
-   public NetworkPlayer(Minecraft var1, int var2, String var3, int var4, int var5, int var6, float var7, float var8) {
+   public NetworkPlayer(Game var1, int var2, String var3, int var4, int var5, int var6, float var7, float var8) {
       super(var1.level, (float)var4, (float)var5, (float)var6);
-      this.minecraft = var1;
+      this.game = var1;
       this.displayName = var3;
       var3 = FontRenderer.stripColor(var3);
       this.name = var3;
@@ -95,10 +93,10 @@ public class NetworkPlayer extends HumanoidMob {
    }
 
    public void renderHover(TextureManager var1, float var2) {
-      FontRenderer var3 = this.minecraft.fontRenderer;
+      FontRenderer var3 = this.game.fontRenderer;
       GL11.glPushMatrix();
       GL11.glTranslatef(this.xo + (this.x - this.xo) * var2, this.yo + (this.y - this.yo) * var2 + 0.8F + this.renderOffset, this.zo + (this.z - this.zo) * var2);
-      GL11.glRotatef(-this.minecraft.player.yRot, 0.0F, 1.0F, 0.0F);
+      GL11.glRotatef(-this.game.player.yRot, 0.0F, 1.0F, 0.0F);
       var2 = 0.05F;
       GL11.glScalef(0.05F, -var2, var2);
       GL11.glTranslatef((float)(-var3.getWidth(this.displayName)) / 2.0F, 0.0F, 0.0F);

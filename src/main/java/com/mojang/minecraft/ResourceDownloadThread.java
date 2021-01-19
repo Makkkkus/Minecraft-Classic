@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class ResourceDownloadThread extends Thread
 {
-	public ResourceDownloadThread(File minecraftFolder, Minecraft minecraft)
+	public ResourceDownloadThread(File minecraftFolder, Game game)
 	{
-		this.minecraft = minecraft;
+		this.game = game;
 
 		this.setName("Resource download thread");
 		this.setDaemon(true);
@@ -136,17 +136,17 @@ public class ResourceDownloadThread extends Thread
 
 			for(int i = 1; i <= 4; i++)
 			{
-				minecraft.sound.registerSound(new File(stepsFolder, "grass" + i + ".ogg"), "step/grass" + i + ".ogg");
-				minecraft.sound.registerSound(new File(stepsFolder, "gravel" + i + ".ogg"), "step/gravel" + i + ".ogg");
-				minecraft.sound.registerSound(new File(stepsFolder, "stone" + i + ".ogg"), "step/stone" + i + ".ogg");
-				minecraft.sound.registerSound(new File(stepsFolder, "wood" + i + ".ogg"), "step/wood" + i + ".ogg");
+				game.sound.registerSound(new File(stepsFolder, "grass" + i + ".ogg"), "step/grass" + i + ".ogg");
+				game.sound.registerSound(new File(stepsFolder, "gravel" + i + ".ogg"), "step/gravel" + i + ".ogg");
+				game.sound.registerSound(new File(stepsFolder, "stone" + i + ".ogg"), "step/stone" + i + ".ogg");
+				game.sound.registerSound(new File(stepsFolder, "wood" + i + ".ogg"), "step/wood" + i + ".ogg");
 			}
 
 			File musicFolder = new File(dir, "music");
 
 			for(int i = 1; i <= 3; i++)
 			{
-				minecraft.sound.registerMusic("calm" + i + ".ogg", new File(musicFolder, "calm" + i + ".ogg"));
+				game.sound.registerMusic("calm" + i + ".ogg", new File(musicFolder, "calm" + i + ".ogg"));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -163,7 +163,7 @@ public class ResourceDownloadThread extends Thread
 	}
 
 	private File dir;
-	private Minecraft minecraft;
+	private Game game;
 	boolean running = false;
 
 	private boolean finished = false;

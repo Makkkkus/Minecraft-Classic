@@ -7,22 +7,22 @@ import javax.imageio.ImageIO;
 
 public class SkinDownloadThread extends Thread
 {
-	public SkinDownloadThread(Minecraft minecraft)
+	public SkinDownloadThread(Game game)
 	{
 		super();
 
-		this.minecraft = minecraft;
+		this.game = game;
 	}
 
 	@Override
 	public void run()
 	{
-		if(minecraft.session != null)
+		if(game.session != null)
 		{
 			HttpURLConnection connection = null;
 
 			try {
-				connection = (HttpURLConnection)new URL("http://www.minecraft.net/skin/" + minecraft.session.username + ".png").openConnection();
+				connection = (HttpURLConnection)new URL("http://www.minecraft.net/skin/" + game.session.username + ".png").openConnection();
 
 				connection.setDoInput(true);
 				connection.setDoOutput(false);
@@ -47,5 +47,5 @@ public class SkinDownloadThread extends Thread
 		}
 	}
 
-	private Minecraft minecraft;
+	private Game game;
 }

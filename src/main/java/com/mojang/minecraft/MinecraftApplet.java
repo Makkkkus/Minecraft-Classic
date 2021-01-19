@@ -9,13 +9,13 @@ public class MinecraftApplet extends Applet
 	private static final long serialVersionUID = 1L;
 
 	private Canvas canvas;
-	private Minecraft minecraft;
+	private Game game;
 
 	private Thread thread = null;
 
 	public void init()
 	{
-		canvas = new MinecraftApplet$1(this);
+		canvas = new MinecraftCanvas(this);
 
 		boolean fullscreen = false;
 
@@ -24,41 +24,41 @@ public class MinecraftApplet extends Applet
 			fullscreen = getParameter("fullscreen").equalsIgnoreCase("true");
 		}
 
-		minecraft = new Minecraft(canvas, this, getWidth(), getHeight(), fullscreen);
+		game = new Game(canvas, this, getWidth(), getHeight(), fullscreen);
 
-		minecraft.host = getDocumentBase().getHost();
+		game.host = getDocumentBase().getHost();
 
 		if(getDocumentBase().getPort() > 0)
 		{
-			minecraft.host = minecraft.host + ":" + getDocumentBase().getPort();
+			game.host = game.host + ":" + getDocumentBase().getPort();
 		}
 
 		if(getParameter("username") != null && getParameter("sessionid") != null)
 		{
-			minecraft.session = new SessionData(getParameter("username"), getParameter("sessionid"));
+			game.session = new SessionData(getParameter("username"), getParameter("sessionid"));
 
 			if(getParameter("mppass") != null)
 			{
-				minecraft.session.mppass = getParameter("mppass");
+				game.session.mppass = getParameter("mppass");
 			}
 
 			// TODO: Not tested.
-			minecraft.session.haspaid = getParameter("haspaid").equalsIgnoreCase("true");
+			game.session.haspaid = getParameter("haspaid").equalsIgnoreCase("true");
 		}
 
 		if(getParameter("loadmap_user") != null && getParameter("loadmap_id") != null)
 		{
-			minecraft.levelName = getParameter("loadmap_user");
-			minecraft.levelId = Integer.parseInt(getParameter("loadmap_id"));
+			game.levelName = getParameter("loadmap_user");
+			game.levelId = Integer.parseInt(getParameter("loadmap_id"));
 		} else if(getParameter("server") != null && getParameter("port") != null) {
 			String server = getParameter("server");
 			int port = Integer.parseInt(getParameter("port"));
 
-			minecraft.server = server;
-			minecraft.port = port;
+			game.server = server;
+			game.port = port;
 		}
 
-		minecraft.levelLoaded = true;
+		game.levelLoaded = true;
 
 		setLayout(new BorderLayout());
 
@@ -73,7 +73,7 @@ public class MinecraftApplet extends Applet
 	{
 		if(thread == null)
 		{
-			thread = new Thread(minecraft);
+			thread = new Thread(game);
 
 			thread.start();
 		}
@@ -82,13 +82,13 @@ public class MinecraftApplet extends Applet
 	@Override
 	public void start()
 	{
-		minecraft.waiting = false;
+		game.loop.waiting = false;
 	}
 
 	@Override
 	public void stop()
 	{
-		minecraft.waiting = true;
+		game.loop.waiting = true;
 	}
 
 	@Override
@@ -101,12 +101,12 @@ public class MinecraftApplet extends Applet
 	{
 		if(thread != null)
 		{
-			minecraft.running = false;
+			game.loop.running = false;
 
 			try {
 				thread.join(1000L);
 			} catch (InterruptedException var3) {
-				minecraft.shutdown();
+				game.shutdown();
 			}
 
 			thread = null;

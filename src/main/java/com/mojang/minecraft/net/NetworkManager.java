@@ -1,6 +1,6 @@
 package com.mojang.minecraft.net;
 
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import com.mojang.minecraft.gui.ErrorScreen;
 import com.mojang.net.NetworkHandler;
 import java.io.ByteArrayOutputStream;
@@ -11,22 +11,22 @@ import java.util.List;
 
 public class NetworkManager
 {
-	public NetworkManager(Minecraft minecraft, String server, int port, String username, String key)
+	public NetworkManager(Game game, String server, int port, String username, String key)
 	{
-		minecraft.online = true;
+		game.online = true;
 
-		this.minecraft = minecraft;
+		this.game = game;
 
 		players = new HashMap<Byte, NetworkPlayer>();
 
-		new ServerConnectThread(this, server, port, username, key, minecraft).start();
+		new ServerConnectThread(this, server, port, username, key, game).start();
 	}
 
 	public ByteArrayOutputStream levelData;
 
 	public NetworkHandler netHandler;
 
-	public Minecraft minecraft;
+	public Game game;
 
 	public boolean successful = false;
 	public boolean levelLoaded = false;
@@ -35,7 +35,7 @@ public class NetworkManager
 
 	public void sendBlockChange(int x, int y, int z, int mode, int block)
 	{
-		netHandler.send(PacketType.PLAYER_SET_BLOCK, new Object[] {x, y, z, mode, block});
+		netHandler.send(PacketType.PLAYER_SET_BLOCK, x, y, z, mode, block);
 	}
 
 	public void error(Exception e)
@@ -44,7 +44,7 @@ public class NetworkManager
 
 		ErrorScreen errorScreen = new ErrorScreen("Disconnected!", e.getMessage());
 
-		minecraft.setCurrentScreen(errorScreen);
+		game.setCurrentScreen(errorScreen);
 
 		e.printStackTrace();
 	}
@@ -54,18 +54,13 @@ public class NetworkManager
 		return netHandler != null && netHandler.connected;
 	}
 
-	public List getPlayers()
+	public List<String> getPlayers()
 	{
-		ArrayList list = new ArrayList();
+		ArrayList<String> list = new ArrayList<String>();
 
-		list.add(minecraft.session.username);
+		list.add(game.session.username);
 
-		Iterator playerIterator = this.players.values().iterator();
-
-		while(playerIterator.hasNext())
-		{
-			NetworkPlayer networkPlayer = (NetworkPlayer)playerIterator.next();
-
+		for (NetworkPlayer networkPlayer : this.players.values()) {
 			list.add(networkPlayer.name);
 		}
 

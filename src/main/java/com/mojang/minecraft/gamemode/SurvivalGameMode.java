@@ -1,6 +1,6 @@
 package com.mojang.minecraft.gamemode;
 
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.MobSpawner;
 import com.mojang.minecraft.level.tile.Block;
@@ -9,9 +9,9 @@ import com.mojang.minecraft.player.Player;
 
 public final class SurvivalGameMode extends GameMode
 {
-	public SurvivalGameMode(Minecraft minecraft)
+	public SurvivalGameMode(Game game)
 	{
-		super(minecraft);
+		super(game);
 	}
 
 	private int hitX;
@@ -37,7 +37,7 @@ public final class SurvivalGameMode extends GameMode
 		{
 			hitDelay--;
 		} else if(x == hitX && y == hitY && z == hitZ) {
-			int type = minecraft.level.getTile(x, y, z);
+			int type = game.level.getTile(x, y, z);
 
 			if(type != 0)
 			{
@@ -45,7 +45,7 @@ public final class SurvivalGameMode extends GameMode
 
 				hardness = block.getHardness();
 
-				block.spawnBlockParticles(minecraft.level, x, y, z, side, minecraft.particleManager);
+				block.spawnBlockParticles(game.level, x, y, z, side, game.particleManager);
 
 				hits++;
 
@@ -71,14 +71,14 @@ public final class SurvivalGameMode extends GameMode
 	@Override
 	public boolean canPlace(int block)
 	{
-		return minecraft.player.inventory.removeResource(block);
+		return game.player.inventory.removeResource(block);
 	}
 
 	@Override
 	public void breakBlock(int x, int y, int z)
 	{
-		int block = minecraft.level.getTile(x, y, z);
-		Block.blocks[block].onBreak(minecraft.level, x, y, z);
+		int block = game.level.getTile(x, y, z);
+		Block.blocks[block].onBreak(game.level, x, y, z);
 
 		super.breakBlock(x, y, z);
 	}
@@ -86,7 +86,7 @@ public final class SurvivalGameMode extends GameMode
 	@Override
 	public void hitBlock(int x, int y, int z)
 	{
-		int block = this.minecraft.level.getTile(x, y, z);
+		int block = this.game.level.getTile(x, y, z);
 
 		if(block > 0 && Block.blocks[block].getHardness() == 0)
 		{
@@ -106,9 +106,9 @@ public final class SurvivalGameMode extends GameMode
 	{
 		if(hits <= 0)
 		{
-			minecraft.levelRenderer.cracks = 0.0F;
+			game.levelRenderer.cracks = 0.0F;
 		} else {
-			minecraft.levelRenderer.cracks = ((float)hits + time - 1.0F) / (float)hardness;
+			game.levelRenderer.cracks = ((float)hits + time - 1.0F) / (float)hardness;
 		}
 	}
 
@@ -122,12 +122,12 @@ public final class SurvivalGameMode extends GameMode
 	public boolean useItem(Player player, int type)
 	{
 		Block block = Block.blocks[type];
-		if(block == Block.RED_MUSHROOM && minecraft.player.inventory.removeResource(type))
+		if(block == Block.RED_MUSHROOM && game.player.inventory.removeResource(type))
 		{
 			player.hurt(null, 3);
 
 			return true;
-		} else if(block == Block.BROWN_MUSHROOM && minecraft.player.inventory.removeResource(type)) {
+		} else if(block == Block.BROWN_MUSHROOM && game.player.inventory.removeResource(type)) {
 			player.heal(5);
 
 			return true;
@@ -160,10 +160,10 @@ public final class SurvivalGameMode extends GameMode
 	{
 		spawner = new MobSpawner(level);
 
-		minecraft.progressBar.setText("Spawning..");
+		game.progressBar.setText("Spawning..");
 
 		int area = level.width * level.height * level.depth / 800;
 
-		spawner.spawn(area, null, minecraft.progressBar);
+		spawner.spawn(area, null, game.progressBar);
 	}
 }

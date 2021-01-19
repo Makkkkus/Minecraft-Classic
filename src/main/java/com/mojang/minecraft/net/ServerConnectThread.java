@@ -1,12 +1,12 @@
 package com.mojang.minecraft.net;
 
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import com.mojang.minecraft.gui.ErrorScreen;
 import com.mojang.net.NetworkHandler;
 
 public class ServerConnectThread extends Thread
 {
-	public ServerConnectThread(NetworkManager networkManager, String server, int port, String username, String key, Minecraft minecraft) {
+	public ServerConnectThread(NetworkManager networkManager, String server, int port, String username, String key, Game game) {
 		super();
 
 		netManager = networkManager;
@@ -17,7 +17,7 @@ public class ServerConnectThread extends Thread
 		this.username = username;
 		this.key = key;
 
-		this.minecraft = minecraft;
+		this.game = game;
 	}
 
 	@Override
@@ -31,11 +31,11 @@ public class ServerConnectThread extends Thread
 
 			netManager.successful = true;
 		} catch (Exception var3) {
-			minecraft.online = false;
+			game.online = false;
 
-			minecraft.networkManager = null;
+			game.networkManager = null;
 
-			minecraft.setCurrentScreen(new ErrorScreen("Failed to connect", "You failed to connect to the server. It\'s probably down!"));
+			game.setCurrentScreen(new ErrorScreen("Failed to connect", "You failed to connect to the server. It\'s probably down!"));
 
 			netManager.successful = false;
 		}
@@ -47,7 +47,7 @@ public class ServerConnectThread extends Thread
 	private String username;
 	private String key;
 
-	private Minecraft minecraft;
+	private Game game;
 
 	private NetworkManager netManager;
 }

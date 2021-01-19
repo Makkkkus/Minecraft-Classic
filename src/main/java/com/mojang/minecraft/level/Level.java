@@ -1,10 +1,8 @@
 package com.mojang.minecraft.level;
 
 import com.mojang.minecraft.Entity;
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import com.mojang.minecraft.MovingObjectPosition;
-import com.mojang.minecraft.level.BlockMap;
-import com.mojang.minecraft.level.NextTickListEntry;
 import com.mojang.minecraft.level.liquid.LiquidType;
 import com.mojang.minecraft.level.tile.Block;
 import com.mojang.minecraft.model.Vec3D;
@@ -42,7 +40,7 @@ public class Level implements Serializable {
    private transient ArrayList tickList;
    public BlockMap blockMap;
    private boolean networkMode;
-   public transient Minecraft rendererContext$5cd64a7f;
+   public transient Game rendererContext$5cd64a7f;
    public boolean creativeMode;
    public int waterLevel;
    public int skyColor;
@@ -854,7 +852,7 @@ public class Level implements Serializable {
 
    public void playSound(String var1, Entity var2, float var3, float var4) {
       if(this.rendererContext$5cd64a7f != null) {
-         Minecraft var5;
+         Game var5;
          if((var5 = this.rendererContext$5cd64a7f).soundPlayer == null || !var5.settings.sound) {
             return;
          }
@@ -869,7 +867,7 @@ public class Level implements Serializable {
 
    public void playSound(String var1, float var2, float var3, float var4, float var5, float var6) {
       if(this.rendererContext$5cd64a7f != null) {
-         Minecraft var7;
+         Game var7;
          if((var7 = this.rendererContext$5cd64a7f).soundPlayer == null || !var7.settings.sound) {
             return;
          }

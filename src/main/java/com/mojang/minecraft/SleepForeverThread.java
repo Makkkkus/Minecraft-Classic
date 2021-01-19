@@ -2,7 +2,7 @@ package com.mojang.minecraft;
 
 public class SleepForeverThread extends Thread
 {
-	public SleepForeverThread(Minecraft minecraft)
+	public SleepForeverThread(Game game)
 	{
 		setDaemon(true);
 

@@ -1,7 +1,7 @@
 package org.oyasunadev.minecraft;
 
-import com.mojang.minecraft.Minecraft;
-import com.mojang.minecraft.MinecraftApplet$1;
+import com.mojang.minecraft.Game;
+import com.mojang.minecraft.MinecraftCanvas;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,7 @@ public final class SPFrame extends JFrame
 {
 	public SPFrame()
 	{
-		setTitle("MinecraftMania - Single Player");
+		setTitle("Minecraft");
 		setSize(854, 480);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,9 +28,9 @@ public final class SPFrame extends JFrame
 	public void startMinecraft()
 	{
 		MCApplet applet = new MCApplet();
-		MinecraftApplet$1 canvas = new MinecraftApplet$1(applet);
+		MinecraftCanvas canvas = new MinecraftCanvas(applet);
 
-		Minecraft minecraft = new Minecraft(canvas, applet, getWidth(), getHeight(), false);
+		Game game = new Game(canvas, applet, getWidth(), getHeight(), false);
 
 		canvas.setSize(getWidth(), getHeight());
 
@@ -38,7 +38,7 @@ public final class SPFrame extends JFrame
 
 		pack();
 
-		new Thread(minecraft).start();
+		new Thread(game).start();
 	}
 
 	public void finish()

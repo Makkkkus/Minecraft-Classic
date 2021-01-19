@@ -1,6 +1,6 @@
 package com.mojang.minecraft.gui;
 
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import com.mojang.minecraft.level.Level;
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,7 +38,7 @@ public class LoadLevelScreen extends GuiScreen implements Runnable {
          }
 
          this.status = "Getting level list..";
-         URL var1 = new URL("http://" + this.minecraft.host + "/listmaps.jsp?user=" + this.minecraft.session.username);
+         URL var1 = new URL("http://" + this.game.host + "/listmaps.jsp?user=" + this.game.session.username);
          BufferedReader var4 = new BufferedReader(new InputStreamReader(var1.openConnection().getInputStream()));
          this.levels = var4.readLine().split(";");
          if(this.levels.length >= 5) {
@@ -94,7 +94,7 @@ public class LoadLevelScreen extends GuiScreen implements Runnable {
             }
 
             if(this.finished || this.loaded && var1.id == 6) {
-               this.minecraft.setCurrentScreen(this.parent);
+               this.game.setCurrentScreen(this.parent);
             }
 
          }
@@ -103,23 +103,23 @@ public class LoadLevelScreen extends GuiScreen implements Runnable {
 
    protected void openLevel(File var1) {
       File var2 = var1;
-      Minecraft var4 = this.minecraft;
+      Game var4 = this.game;
       Level var5;
       boolean var10000;
-      if((var5 = this.minecraft.levelIo.load(var2)) == null) {
+      if((var5 = this.game.levelIo.load(var2)) == null) {
          var10000 = false;
       } else {
          var4.setLevel(var5);
          var10000 = true;
       }
 
-      this.minecraft.setCurrentScreen(this.parent);
+      this.game.setCurrentScreen(this.parent);
    }
 
    protected void openLevel(int var1) {
-      this.minecraft.loadOnlineLevel(this.minecraft.session.username, var1);
-      this.minecraft.setCurrentScreen((GuiScreen)null);
-      this.minecraft.grabMouse();
+      this.game.loadOnlineLevel(this.game.session.username, var1);
+      this.game.setCurrentScreen((GuiScreen)null);
+      this.game.grabMouse();
    }
 
    public void render(int var1, int var2) {

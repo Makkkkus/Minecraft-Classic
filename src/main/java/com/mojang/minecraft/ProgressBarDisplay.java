@@ -1,7 +1,5 @@
 package com.mojang.minecraft;
 
-import com.mojang.minecraft.Minecraft;
-import com.mojang.minecraft.StopGameException;
 import com.mojang.minecraft.render.ShapeRenderer;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -9,22 +7,22 @@ import org.lwjgl.opengl.GL11;
 public final class ProgressBarDisplay {
 
    private String text = "";
-   private Minecraft minecraft;
+   private Game game;
    private String title = "";
    private long start = System.currentTimeMillis();
 
 
-   public ProgressBarDisplay(Minecraft var1) {
-      this.minecraft = var1;
+   public ProgressBarDisplay(Game var1) {
+      this.game = var1;
    }
 
    public final void setTitle(String var1) {
-      if(!this.minecraft.running) {
+      if(!game.loop.running) {
          throw new StopGameException();
       } else {
          this.title = var1;
-         int var3 = this.minecraft.width * 240 / this.minecraft.height;
-         int var2 = this.minecraft.height * 240 / this.minecraft.height;
+         int var3 = this.game.width * 240 / this.game.height;
+         int var2 = this.game.height * 240 / this.game.height;
          GL11.glClear(256);
          GL11.glMatrixMode(5889);
          GL11.glLoadIdentity();
@@ -36,7 +34,7 @@ public final class ProgressBarDisplay {
    }
 
    public final void setText(String var1) {
-      if(!this.minecraft.running) {
+      if(!game.loop.running) {
          throw new StopGameException();
       } else {
          this.text = var1;
@@ -45,17 +43,17 @@ public final class ProgressBarDisplay {
    }
 
    public final void setProgress(int var1) {
-      if(!this.minecraft.running) {
+      if(!game.loop.running) {
          throw new StopGameException();
       } else {
          long var2;
          if((var2 = System.currentTimeMillis()) - this.start < 0L || var2 - this.start >= 20L) {
             this.start = var2;
-            int var4 = this.minecraft.width * 240 / this.minecraft.height;
-            int var5 = this.minecraft.height * 240 / this.minecraft.height;
+            int var4 = this.game.width * 240 / this.game.height;
+            int var5 = this.game.height * 240 / this.game.height;
             GL11.glClear(16640);
             ShapeRenderer var6 = ShapeRenderer.instance;
-            int var7 = this.minecraft.textureManager.load("/dirt.png");
+            int var7 = this.game.textureManager.load("/dirt.png");
             GL11.glBindTexture(3553, var7);
             float var10 = 32.0F;
             var6.begin();
@@ -84,8 +82,8 @@ public final class ProgressBarDisplay {
                GL11.glEnable(3553);
             }
 
-            this.minecraft.fontRenderer.render(this.title, (var4 - this.minecraft.fontRenderer.getWidth(this.title)) / 2, var5 / 2 - 4 - 16, 16777215);
-            this.minecraft.fontRenderer.render(this.text, (var4 - this.minecraft.fontRenderer.getWidth(this.text)) / 2, var5 / 2 - 4 + 8, 16777215);
+            this.game.fontRenderer.render(this.title, (var4 - this.game.fontRenderer.getWidth(this.title)) / 2, var5 / 2 - 4 - 16, 16777215);
+            this.game.fontRenderer.render(this.text, (var4 - this.game.fontRenderer.getWidth(this.text)) / 2, var5 / 2 - 4 + 8, 16777215);
             Display.update();
 
             try {

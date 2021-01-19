@@ -2,10 +2,9 @@ package com.mojang.minecraft;
 
 import java.awt.Canvas;
 
-// MinecraftCanvas
-public class MinecraftApplet$1 extends Canvas
+public class MinecraftCanvas extends Canvas
 {
-	public MinecraftApplet$1(MinecraftApplet minecraftApplet)
+	public MinecraftCanvas(MinecraftApplet minecraftApplet)
 	{
 		this.applet = minecraftApplet;
 	}

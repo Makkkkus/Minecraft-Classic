@@ -34,7 +34,7 @@ public final class BlockSelectScreen extends GuiScreen {
       }
 
       drawCenteredString(this.fontRenderer, "Select block", this.width / 2, 40, 16777215);
-      TextureManager var7 = this.minecraft.textureManager;
+      TextureManager var7 = this.game.textureManager;
       ShapeRenderer var8 = ShapeRenderer.instance;
       var2 = var7.load("/terrain.png");
       GL11.glBindTexture(3553, var2);
@@ -65,8 +65,8 @@ public final class BlockSelectScreen extends GuiScreen {
 
    protected final void onMouseClick(int var1, int var2, int var3) {
       if(var3 == 0) {
-         this.minecraft.player.inventory.replaceSlot(this.getBlockOnScreen(var1, var2));
-         this.minecraft.setCurrentScreen((GuiScreen)null);
+         this.game.player.inventory.replaceSlot(this.getBlockOnScreen(var1, var2));
+         this.game.setCurrentScreen((GuiScreen)null);
       }
 
    }

@@ -31,11 +31,11 @@ public final class OptionsScreen extends GuiScreen {
          }
 
          if(var1.id == 100) {
-            this.minecraft.setCurrentScreen(new ControlsScreen(this, this.settings));
+            this.game.setCurrentScreen(new ControlsScreen(this, this.settings));
          }
 
          if(var1.id == 200) {
-            this.minecraft.setCurrentScreen(this.parent);
+            this.game.setCurrentScreen(this.parent);
          }
 
       }

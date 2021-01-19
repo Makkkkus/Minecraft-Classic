@@ -1,16 +1,16 @@
 package com.mojang.minecraft.render;
 
-import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.Game;
 import com.mojang.minecraft.level.tile.Block;
 
 public class HeldBlock
 {
-	public HeldBlock(Minecraft minecraft)
+	public HeldBlock(Game game)
 	{
-		this.minecraft = minecraft;
+		this.game = game;
 	}
 
-	public Minecraft minecraft;
+	public Game game;
 
 	public Block block = null;
 
