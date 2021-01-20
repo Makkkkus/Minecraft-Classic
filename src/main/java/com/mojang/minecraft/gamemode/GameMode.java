@@ -2,8 +2,8 @@ package com.mojang.minecraft.gamemode;
 
 import com.mojang.minecraft.Game;
 import com.mojang.minecraft.level.Level;
-import com.mojang.minecraft.level.tile.Block;
-import com.mojang.minecraft.level.tile.Tile$SoundType;
+import com.mojang.minecraft.level.blocks.Block;
+import com.mojang.minecraft.level.blocks.Tile$SoundType;
 import com.mojang.minecraft.player.Player;
 
 public class GameMode

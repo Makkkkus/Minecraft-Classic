@@ -15,8 +15,8 @@ public final class LevelObjectInputStream extends ObjectInputStream {
    public LevelObjectInputStream(InputStream var1) throws IOException {
       super(var1);
       this.classes.add("com.mojang.minecraft.player.Player$1");
-      this.classes.add("com.mojang.minecraft.mob.Creeper$1");
-      this.classes.add("com.mojang.minecraft.mob.Skeleton$1");
+      this.classes.add("com.mojang.minecraft.entities.mob.Creeper$1");
+      this.classes.add("com.mojang.minecraft.entities.mob.Skeleton$1");
    }
 
    protected final ObjectStreamClass readClassDescriptor() {

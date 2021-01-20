@@ -1,6 +1,6 @@
 package com.mojang.minecraft.sound;
 
-import com.mojang.minecraft.Entity;
+import com.mojang.minecraft.entities.Entity;
 import com.mojang.util.MathHelper;
 
 public abstract class BaseSoundPos implements SoundPos

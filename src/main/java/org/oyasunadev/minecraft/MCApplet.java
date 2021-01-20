@@ -18,15 +18,14 @@ public class MCApplet extends MinecraftApplet
 	public MCApplet()
 	{
 		MP = false;
-
-		parameters = new HashMap();
+		parameters = new HashMap<String, Integer>();
 	}
 
 	public MCApplet(String username, String sessionid, boolean haspaid, String server, int port, String mppass)
 	{
 		MP = true;
 
-		parameters = new HashMap();
+		parameters = new HashMap<String, Integer>();
 
 		parameters.put("username", username);
 		parameters.put("sessionid", sessionid);

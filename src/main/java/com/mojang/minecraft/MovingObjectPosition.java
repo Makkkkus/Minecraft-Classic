@@ -1,5 +1,6 @@
 package com.mojang.minecraft;
 
+import com.mojang.minecraft.entities.Entity;
 import com.mojang.minecraft.model.Vec3D;
 
 public class MovingObjectPosition

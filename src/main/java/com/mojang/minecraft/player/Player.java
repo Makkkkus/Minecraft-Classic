@@ -1,12 +1,9 @@
 package com.mojang.minecraft.player;
 
-import com.mojang.minecraft.Entity;
+import com.mojang.minecraft.entities.Entity;
 import com.mojang.minecraft.level.Level;
-import com.mojang.minecraft.mob.Mob;
+import com.mojang.minecraft.entities.mob.Mob;
 import com.mojang.minecraft.model.HumanoidModel;
-import com.mojang.minecraft.player.InputHandler;
-import com.mojang.minecraft.player.Inventory;
-import com.mojang.minecraft.player.Player$1;
 import com.mojang.minecraft.render.TextureManager;
 import com.mojang.util.MathHelper;
 import java.awt.image.BufferedImage;
@@ -77,10 +74,10 @@ public class Player extends Mob {
 
       this.bob += (var1 - this.bob) * 0.4F;
       this.tilt += (var2 - this.tilt) * 0.8F;
-      List var3;
-      if(this.health > 0 && (var3 = this.level.findEntities(this, this.bb.grow(1.0F, 0.0F, 1.0F))) != null) {
-         for(int var4 = 0; var4 < var3.size(); ++var4) {
-            ((Entity)var3.get(var4)).playerTouch(this);
+      List<Entity> list = level.findEntities(this, bb.grow(1.0F, 0.0F, 1.0F));
+      if(this.health > 0 && list != null) {
+         for (Entity e : list) {
+            e.playerTouch(this);
          }
       }
 

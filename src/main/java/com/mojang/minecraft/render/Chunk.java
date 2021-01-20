@@ -1,10 +1,8 @@
 package com.mojang.minecraft.render;
 
 import com.mojang.minecraft.level.Level;
-import com.mojang.minecraft.level.tile.Block;
+import com.mojang.minecraft.level.blocks.Block;
 import com.mojang.minecraft.player.Player;
-import com.mojang.minecraft.render.Frustrum;
-import com.mojang.minecraft.render.ShapeRenderer;
 import com.mojang.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 

@@ -11,8 +11,8 @@ public final class SPFrame extends JFrame
 	public SPFrame()
 	{
 		setTitle("Minecraft");
-		setSize(854, 480);
-		setResizable(false);
+		setSize(1280, 720);
+		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 

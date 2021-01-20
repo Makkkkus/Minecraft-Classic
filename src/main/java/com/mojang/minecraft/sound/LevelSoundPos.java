@@ -1,6 +1,6 @@
 package com.mojang.minecraft.sound;
 
-import com.mojang.minecraft.Entity;
+import com.mojang.minecraft.entities.Entity;
 
 public final class LevelSoundPos extends BaseSoundPos
 {

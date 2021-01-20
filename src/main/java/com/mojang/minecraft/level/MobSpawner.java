@@ -1,16 +1,15 @@
 package com.mojang.minecraft.level;
 
-import com.mojang.minecraft.Entity;
+import com.mojang.minecraft.entities.Entity;
 import com.mojang.minecraft.ProgressBarDisplay;
-import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.liquid.LiquidType;
-import com.mojang.minecraft.mob.Creeper;
-import com.mojang.minecraft.mob.Mob;
-import com.mojang.minecraft.mob.Pig;
-import com.mojang.minecraft.mob.Sheep;
-import com.mojang.minecraft.mob.Skeleton;
-import com.mojang.minecraft.mob.Spider;
-import com.mojang.minecraft.mob.Zombie;
+import com.mojang.minecraft.entities.mob.Creeper;
+import com.mojang.minecraft.entities.mob.Mob;
+import com.mojang.minecraft.entities.mob.Pig;
+import com.mojang.minecraft.entities.mob.Sheep;
+import com.mojang.minecraft.entities.mob.Skeleton;
+import com.mojang.minecraft.entities.mob.Spider;
+import com.mojang.minecraft.entities.mob.Zombie;
 
 public final class MobSpawner {
 

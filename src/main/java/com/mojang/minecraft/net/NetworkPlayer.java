@@ -2,7 +2,7 @@ package com.mojang.minecraft.net;
 
 import com.mojang.minecraft.Game;
 import com.mojang.minecraft.gui.FontRenderer;
-import com.mojang.minecraft.mob.HumanoidMob;
+import com.mojang.minecraft.entities.mob.HumanoidMob;
 import com.mojang.minecraft.render.TextureManager;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;

@@ -4,7 +4,7 @@ import com.mojang.minecraft.Game;
 import com.mojang.minecraft.SessionData;
 import com.mojang.minecraft.gui.BlockSelectScreen;
 import com.mojang.minecraft.level.Level;
-import com.mojang.minecraft.level.tile.Block;
+import com.mojang.minecraft.level.blocks.Block;
 import com.mojang.minecraft.player.Player;
 
 public class CreativeGameMode extends GameMode

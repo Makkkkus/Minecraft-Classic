@@ -29,8 +29,7 @@ public final class SoundReader {
 	   byte[] var2 = new byte[4096];
       int var3 = 0;
       boolean var1 = false;
-      IdentificationHeader var14 = var12.getIdentificationHeader();
-      int var4 = var12.getIdentificationHeader().getChannels();
+	   int var4 = var12.getIdentificationHeader().getChannels();
       short[] var5 = new short[4096];
       int var6 = 0;
 

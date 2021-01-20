@@ -1,7 +1,7 @@
 package com.mojang.minecraft.render;
 
 import com.mojang.minecraft.Game;
-import com.mojang.minecraft.level.tile.Block;
+import com.mojang.minecraft.level.blocks.Block;
 
 public class HeldBlock
 {

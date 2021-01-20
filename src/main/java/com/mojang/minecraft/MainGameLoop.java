@@ -1,24 +1,25 @@
 package com.mojang.minecraft;
 
 
+import com.mojang.minecraft.entities.Entity;
 import com.mojang.minecraft.gamemode.CreativeGameMode;
 import com.mojang.minecraft.gamemode.SurvivalGameMode;
 import com.mojang.minecraft.gui.ChatInputScreen;
 import com.mojang.minecraft.gui.ErrorScreen;
 import com.mojang.minecraft.gui.HUDScreen;
-import com.mojang.minecraft.item.Arrow;
+import com.mojang.minecraft.entities.Arrow;
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.LevelIO;
 import com.mojang.minecraft.level.liquid.LiquidType;
-import com.mojang.minecraft.level.tile.Block;
+import com.mojang.minecraft.level.blocks.Block;
 import com.mojang.minecraft.model.ModelPart;
 import com.mojang.minecraft.model.Vec3D;
 import com.mojang.minecraft.net.NetworkManager;
 import com.mojang.minecraft.net.NetworkPlayer;
 import com.mojang.minecraft.net.PacketType;
-import com.mojang.minecraft.particle.Particle;
-import com.mojang.minecraft.particle.ParticleManager;
-import com.mojang.minecraft.particle.WaterDropParticle;
+import com.mojang.minecraft.entities.particle.Particle;
+import com.mojang.minecraft.entities.particle.ParticleManager;
+import com.mojang.minecraft.entities.particle.WaterDropParticle;
 import com.mojang.minecraft.phys.AABB;
 import com.mojang.minecraft.player.Player;
 import com.mojang.minecraft.render.*;

@@ -1,7 +1,6 @@
 package com.mojang.minecraft.player;
 
-import com.mojang.minecraft.mob.ai.BasicAI;
-import com.mojang.minecraft.player.Player;
+import com.mojang.minecraft.entities.mob.ai.BasicAI;
 
 // PlayerAI
 public class Player$1 extends BasicAI

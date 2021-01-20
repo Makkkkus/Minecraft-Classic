@@ -2,34 +2,26 @@ package com.mojang.minecraft;
 
 import com.mojang.minecraft.gamemode.CreativeGameMode;
 import com.mojang.minecraft.gamemode.GameMode;
-import com.mojang.minecraft.gamemode.SurvivalGameMode;
 import com.mojang.minecraft.gui.*;
-import com.mojang.minecraft.item.Arrow;
-import com.mojang.minecraft.item.Item;
+import com.mojang.minecraft.entities.Item;
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.LevelIO;
 import com.mojang.minecraft.level.generator.LevelGenerator;
-import com.mojang.minecraft.level.tile.Block;
-import com.mojang.minecraft.mob.Mob;
+import com.mojang.minecraft.level.blocks.Block;
+import com.mojang.minecraft.entities.mob.Mob;
 import com.mojang.minecraft.model.HumanoidModel;
 import com.mojang.minecraft.model.ModelManager;
 import com.mojang.minecraft.net.NetworkManager;
-import com.mojang.minecraft.net.NetworkPlayer;
-import com.mojang.minecraft.net.PacketType;
-import com.mojang.minecraft.particle.ParticleManager;
-import com.mojang.minecraft.particle.WaterDropParticle;
+import com.mojang.minecraft.entities.particle.ParticleManager;
 import com.mojang.minecraft.phys.AABB;
 import com.mojang.minecraft.player.InputHandlerImpl;
 import com.mojang.minecraft.player.Player;
 import com.mojang.minecraft.render.Renderer;
 import com.mojang.minecraft.render.*;
-import com.mojang.minecraft.render.texture.TextureFX;
 import com.mojang.minecraft.render.texture.TextureLavaFX;
 import com.mojang.minecraft.render.texture.TextureWaterFX;
 import com.mojang.minecraft.sound.SoundManager;
 import com.mojang.minecraft.sound.SoundPlayer;
-import com.mojang.net.NetworkHandler;
-import com.sun.tools.javac.Main;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Controllers;
@@ -50,7 +42,7 @@ import java.nio.IntBuffer;
 
 public final class Game implements Runnable {
 
-	public GameMode gamemode = new SurvivalGameMode(this);
+	public GameMode gamemode = new CreativeGameMode(this);
 	public int width;
 	public int height;
 	public Level level;
@@ -258,27 +250,27 @@ public final class Game implements Runnable {
 			String appName = "minecraftclassic";
 			String homeDir = System.getProperty("user.home", ".");
 			String osName = System.getProperty("os.name").toLowerCase();
-			File var7;
+			File appDir;
 			switch (OS.GetOperatingSystemAsInt(osName)) {
-				case 1, 2 -> var7 = new File(homeDir, '.' + appName + '/');
+				case 1, 2 -> appDir = new File(homeDir, '.' + appName + '/');
 				case 3 -> {
-					String var8;
-					if ((var8 = System.getenv("APPDATA")) != null) {
-						var7 = new File(var8, "." + appName + '/');
+					String env = System.getenv("APPDATA");
+					if (env != null) {
+						appDir = new File(env, "." + appName + '/');
 					} else {
-						var7 = new File(homeDir, '.' + appName + '/');
+						appDir = new File(homeDir, '.' + appName + '/');
 					}
 				}
-				case 4 -> var7 = new File(homeDir, "Library/Application Support/" + appName);
-				default -> var7 = new File(homeDir, appName + '/');
+				case 4 -> appDir = new File(homeDir, "Library/Application Support/" + appName);
+				default -> appDir = new File(homeDir, appName + '/');
 			}
 
-			if (!var7.exists() && !var7.mkdirs()) {
-				throw new RuntimeException("The working directory could not be created: " + var7);
+			if (!appDir.exists() && !appDir.mkdirs()) {
+				throw new RuntimeException("The working directory could not be created: " + appDir);
 			}
 
-			File var2 = var7;
-			settings = new GameSettings(this, var7);
+			File var2 = appDir;
+			settings = new GameSettings(this, appDir);
 			textureManager = new TextureManager(settings);
 			textureManager.registerAnimation(new TextureLavaFX());
 			textureManager.registerAnimation(new TextureWaterFX());
@@ -299,14 +291,12 @@ public final class Game implements Runnable {
 					if (levelName != null) {
 						loadOnlineLevel(levelName, levelId);
 					} else if (!levelLoaded) {
-						Level var11 = levelIo.load(new FileInputStream(new File("level.dat")));
-						if (var11 != null) {
-							setLevel(var11);
+						Level levelSave = levelIo.load(new FileInputStream(new File(appDir, "level.dat")));
+						if (levelSave != null) {
+							setLevel(levelSave);
 						}
 					}
-				} catch (Exception var54) {
-					var54.printStackTrace();
-				}
+				} catch (Exception ignored) { }
 
 				if (level == null) {
 					generateLevel(1);
@@ -317,8 +307,8 @@ public final class Game implements Runnable {
 			if (levelLoaded) {
 				try {
 					cursor = new Cursor(16, 16, 0, 0, 1, var9, null);
-				} catch (LWJGLException var53) {
-					var53.printStackTrace();
+				} catch (LWJGLException e) {
+					e.printStackTrace();
 				}
 			}
 
@@ -331,8 +321,8 @@ public final class Game implements Runnable {
 					soundPlayer.dataLine.open(format, 4410);
 					soundPlayer.dataLine.start();
 					soundPlayer.running = true;
-					Thread soundThread;
-					(soundThread = new Thread(soundPlayer)).setDaemon(true);
+					Thread soundThread = new Thread(soundPlayer);
+					soundThread.setDaemon(true);
 					soundThread.setPriority(10);
 					soundThread.start();
 				} catch (Exception e) {
@@ -390,34 +380,34 @@ public final class Game implements Runnable {
 
 	void onMouseClick(int var1) {
 		if (var1 != 0 || MainGameLoop.blockHitTime <= 0) {
-			HeldBlock var2;
+			HeldBlock heldBlock;
 			if (var1 == 0) {
-				var2 = renderer.heldBlock;
+				heldBlock = renderer.heldBlock;
 				renderer.heldBlock.offset = -1;
-				var2.moving = true;
+				heldBlock.moving = true;
 			}
 
 			int var3;
-			if (var1 == 1 && (var3 = this.player.inventory.getSelected()) > 0 && this.gamemode.useItem(this.player, var3)) {
-				var2 = this.renderer.heldBlock;
+			if (var1 == 1 && (var3 = player.inventory.getSelected()) > 0 && gamemode.useItem(player, var3)) {
+				heldBlock = renderer.heldBlock;
 				this.renderer.heldBlock.pos = 0.0F;
-			} else if (this.selected == null) {
-				if (var1 == 0 && !(this.gamemode instanceof CreativeGameMode)) {
+			} else if (selected == null) {
+				if (var1 == 0 && !(gamemode instanceof CreativeGameMode)) {
 					MainGameLoop.blockHitTime = 10;
 				}
 
 			} else {
-				if (this.selected.entityPos == 1) {
+				if (selected.entityPos == 1) {
 					if (var1 == 0) {
-						this.selected.entity.hurt(this.player, 4);
+						selected.entity.hurt(player, 4);
 						return;
 					}
-				} else if (this.selected.entityPos == 0) {
-					var3 = this.selected.x;
-					int var4 = this.selected.y;
-					int var5 = this.selected.z;
+				} else if (selected.entityPos == 0) {
+					var3 = selected.x;
+					int var4 = selected.y;
+					int var5 = selected.z;
 					if (var1 != 0) {
-						if (this.selected.face == 0) {
+						if (selected.face == 0) {
 							--var4;
 						}
 
@@ -466,7 +456,7 @@ public final class Game implements Runnable {
 							}
 
 							this.level.netSetTile(var3, var4, var5, var10);
-							var2 = this.renderer.heldBlock;
+							heldBlock = this.renderer.heldBlock;
 							this.renderer.heldBlock.pos = 0.0F;
 							Block.blocks[var10].onPlace(this.level, var3, var4, var5);
 						}
@@ -487,12 +477,12 @@ public final class Game implements Runnable {
 		this.setLevel(var4);
 	}
 
-	public final boolean loadOnlineLevel(String var1, int var2) {
-		Level var3;
-		if ((var3 = this.levelIo.loadOnline(this.host, var1, var2)) == null) {
+	public final boolean loadOnlineLevel(String levelName, int id) {
+		Level level = levelIo.loadOnline(host, levelName, id);
+		if (level == null) {
 			return false;
 		} else {
-			this.setLevel(var3);
+			this.setLevel(level);
 			return true;
 		}
 	}

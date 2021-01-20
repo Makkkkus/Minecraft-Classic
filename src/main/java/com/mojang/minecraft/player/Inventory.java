@@ -1,7 +1,7 @@
 package com.mojang.minecraft.player;
 
 import com.mojang.minecraft.SessionData;
-import com.mojang.minecraft.level.tile.Block;
+import com.mojang.minecraft.level.blocks.Block;
 import java.io.Serializable;
 
 public class Inventory implements Serializable {

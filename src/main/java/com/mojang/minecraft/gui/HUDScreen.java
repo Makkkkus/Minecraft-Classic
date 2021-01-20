@@ -3,7 +3,7 @@ package com.mojang.minecraft.gui;
 import com.mojang.minecraft.ChatLine;
 import com.mojang.minecraft.Game;
 import com.mojang.minecraft.gamemode.SurvivalGameMode;
-import com.mojang.minecraft.level.tile.Block;
+import com.mojang.minecraft.level.blocks.Block;
 import com.mojang.minecraft.player.Inventory;
 import com.mojang.minecraft.render.ShapeRenderer;
 import com.mojang.minecraft.render.TextureManager;

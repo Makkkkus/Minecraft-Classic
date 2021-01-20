@@ -1,6 +1,6 @@
 package com.mojang.minecraft;
 
-import com.mojang.minecraft.level.tile.Block;
+import com.mojang.minecraft.level.blocks.Block;
 import java.util.ArrayList;
 import java.util.List;
 
